@@ -12,7 +12,7 @@ class Storage {
     addEntry(text) {
         this.reload();
         this.diary.push(this.createEntry(text));
-        fs.writeFileSync(this.path, JSON.stringify({ version: process.env.npm_package_version, diary: this.diary }));
+        this.commit();
     }
     createEntry(text) {
         const time = new Date();
@@ -21,6 +21,13 @@ class Storage {
             date: `${time.getDate()}/${time.getMonth()}/${time.getFullYear()}`,
             text
         }
+    }
+    deleteEntry(entryId) {
+        this.diary = this.diary.filter(e => e.id !== entryId);
+        this.commit();
+    }
+    commit() {
+        fs.writeFileSync(this.path, JSON.stringify({ version: process.env.npm_package_version, diary: this.diary }));
     }
 }
 

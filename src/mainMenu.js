@@ -9,24 +9,28 @@ async function entryItem(itemId) {
     window.term.clear();
     const item = storage.diary.find(e => e.id === itemId);
     window.renderSimpleText(`\n\n${chalk.green(item.date)}\n\n${item.text}\n\n`);
-    const response = await window.renderBottomSingleLineMenu(['Back']);
+    const response = await window.renderBottomSingleLineMenu(['Back', 'Delete']);
+    storage.reload();
     switch(response) {
         case 'Back':
+            break;
+        case 'Delete':
+            storage.deleteEntry(item.id);
             storage.reload();
-            const entries = [];
-            storage.diary.forEach((element, i) => {
-                entries.push([`${chalk.green(element.date)} ${element.text.substring(0, 30)}...`, () => {
-                    entryItem(element.id, () => {
-                        display();
-                    }, (id) => {
-                        parsedData.diary = parsedData.diary.filter(e => e.id !== id);
-                        fs.writeFile(process.env.STORAGE_PATH+'/data.json', JSON.stringify(parsedData), () => display());
-                    })
-                }]);
-            });
-            singleColumnMenu(entries);
             break;
     }
+    const entries = [];
+    storage.diary.forEach((element, i) => {
+        entries.push([`${chalk.green(element.date)} ${element.text.substring(0, 30)}...`, () => {
+            entryItem(element.id, () => {
+                display();
+            }, (id) => {
+                parsedData.diary = parsedData.diary.filter(e => e.id !== id);
+                fs.writeFile(process.env.STORAGE_PATH+'/data.json', JSON.stringify(parsedData), () => display());
+            })
+        }]);
+    });
+    singleColumnMenu(entries);
 }
 
 async function singleColumnMenu(items) {

@@ -1,4 +1,6 @@
+const { randomUUID } = require('crypto');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = (data, path = process.env.STORAGE_PATH) => {
     
@@ -7,7 +9,8 @@ module.exports = (data, path = process.env.STORAGE_PATH) => {
     const dataStructure = {
         version: process.env.npm_package_version,
         diary:[
-            {
+            {   
+                id: uuidv4(),
                 date: `${dataTime.getDate()}/${dataTime.getMonth()}/${dataTime.getFullYear()}`,
                 text: data
             }

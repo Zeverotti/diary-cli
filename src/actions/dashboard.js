@@ -1,4 +1,4 @@
-const mainMenu = require('../mainMenu.js');
+const { singleColumnMenu: mainMenu } = require('../mainMenu.js');
 const write = require('./write');
 const read = require('./read');
 

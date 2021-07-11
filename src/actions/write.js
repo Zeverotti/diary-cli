@@ -1,7 +1,8 @@
 const texteditor = require('../texteditor.js');
-const write = require('../write.js');
+const Storage = require('../Storage');
+const storage = new Storage();
 
 module.exports = async () => {
     const data = await texteditor();
-    write(data);
+    storage.addEntry(data);
 }

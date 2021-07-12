@@ -26,6 +26,14 @@ class Storage {
         this.diary = this.diary.filter(e => e.id !== entryId);
         this.commit();
     }
+    editEntry(entryId, text) {
+        const index = this.diary.findIndex(e => e.id === entryId);
+        this.diary[index] = {
+            ...this.diary[index],
+            text
+        }
+        this.commit();
+    }
     commit() {
         fs.writeFileSync(this.path, JSON.stringify({ version: process.env.npm_package_version, diary: this.diary }));
     }

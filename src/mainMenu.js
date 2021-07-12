@@ -4,12 +4,13 @@ const Window = require('./Window');
 const window = new Window();
 const Storage = require('./Storage');
 const storage = new Storage();
+const texteditor = require('./texteditor.js');
 
 async function entryItem(itemId) {
     window.term.clear();
     const item = storage.diary.find(e => e.id === itemId);
     window.renderSimpleText(`\n\n${chalk.green(item.date)}\n\n${item.text}\n\n`);
-    const response = await window.renderBottomSingleLineMenu(['Back', 'Delete']);
+    const response = await window.renderBottomSingleLineMenu(['Back', 'Delete', 'Edit']);
     storage.reload();
     switch(response) {
         case 'Back':
@@ -17,6 +18,11 @@ async function entryItem(itemId) {
         case 'Delete':
             storage.deleteEntry(item.id);
             storage.reload();
+            break;
+        case 'Edit':
+            const text = await texteditor(item.text);
+            storage.editEntry(itemId, text);
+            window.term.processExit(0);
             break;
     }
     const entries = [];

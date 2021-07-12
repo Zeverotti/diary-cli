@@ -1,6 +1,6 @@
 const Termit = require("termit");
 
-module.exports = () => {
+module.exports = (text = '') => {
 	return new Promise((resolve, reject) => {
 		let options = {
 			disableOpen: true,
@@ -8,6 +8,8 @@ module.exports = () => {
 			title: 'New diary entry'
 		}
 		let term = new Termit(options);
+
+		term.textBuffer.setText(text);
 
 		term.init();
 

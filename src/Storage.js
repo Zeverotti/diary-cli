@@ -1,13 +1,15 @@
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+import fs from 'fs';
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 class Storage {
     constructor(){
         this.path = process.env.STORAGE_PATH+'/data.json';
+        this.diary = [];
         this.reload();
     }
     reload() {
-        this.diary = JSON.parse(fs.readFileSync(this.path)).diary;
+        this.diary = JSON.parse(fs.readFileSync(this.path).toString()).diary;
     }
     addEntry(text) {
         this.reload();
@@ -39,4 +41,14 @@ class Storage {
     }
 }
 
-module.exports = Storage;
+export const StorageContext = React.createContext({});
+
+const StorageProvider = (props) => {
+    return (
+        <StorageContext.Provider value={{ storage: new Storage() }}>
+            {props.children}
+        </StorageContext.Provider>
+    )
+}
+
+export default StorageProvider;

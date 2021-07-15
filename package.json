@@ -1,10 +1,12 @@
 {
   "name": "diary",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Command line tool for journaling and note taking",
+  "main": "./src/index.js",
   "preferGlobal": true,
-  "bin": "./index.js",
+  "bin": {
+    "diary": "./dist/index.js"
+  },
   "scripts": {
     "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
     "start": "node dist"

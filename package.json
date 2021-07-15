@@ -6,16 +6,25 @@
   "preferGlobal": true,
   "bin": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "build-node": "babel ./src --out-dir ./dist --source-maps --copy-files",
+    "start": "node dist"
   },
   "author": "zeverotti",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.1",
-    "commander": "^8.0.0",
-    "terminal-kit": "^2.1.5",
-    "termit": "^0.4.4",
+    "clipboardy": "^2.3.0",
+    "ink": "^3.0.8",
+    "ink-select-input": "^4.2.0",
+    "ink-select-input-horizontal": "^4.5.1",
+    "ink-use-stdout-dimensions": "^1.0.5",
+    "react": "^17.0.2",
+    "react-is-mounted-hook": "^1.1.2",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5"
   }
 }
